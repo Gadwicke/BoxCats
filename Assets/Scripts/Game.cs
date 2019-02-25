@@ -16,6 +16,9 @@ public class Game : MonoBehaviour
     
     void Start()
     {
+        //Initialize this here static
+        var discard = SafeClock.Instance.UtcNow;
+
         _manager = World.Active.GetOrCreateManager<EntityManager>();
 
         //Demo only for now
@@ -39,7 +42,7 @@ public class Game : MonoBehaviour
             _manager.AddBuffer<NeedValue>(entities[i]);
             var needs = _manager.GetBuffer<NeedValue>(entities[i]);
 
-            for (int j = 0; j < (int)Goals.Count - 1; j++)
+            for (int j = 0; j < (int)Goals.Count; j++)
             {
                 needs.Add(0);
             }
@@ -47,7 +50,7 @@ public class Game : MonoBehaviour
             _manager.AddBuffer<NeedModifierValue>(entities[i]);
             var modifiers = _manager.GetBuffer<NeedModifierValue>(entities[i]);
 
-            for (int j = 0; j < (int)Goals.Count - 1; j++)
+            for (int j = 0; j < (int)Goals.Count; j++)
             {
                 modifiers.Add(Random.Range(0.5f, 1.5f));
             }

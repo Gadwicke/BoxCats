@@ -6,22 +6,27 @@ using Unity.Jobs;
 public class GoalSystem : JobComponentSystem
 {
     [BurstCompile]
-    public struct AssessGoal : IJobProcessComponentDataWithEntity<GoalData>
+    public struct AssessGoal : IJobProcessComponentDataWithEntity<GoalData, AttachmentData>
     {
         [ReadOnly]
         public BufferFromEntity<NeedValue> Needs;
 
-        public void Execute(Entity entity, int i, ref GoalData goals)
+        public void Execute(Entity entity, int i, ref GoalData goals, [ReadOnly] ref  AttachmentData attach)
         {
             //Utility function to establish goals based on needs
             //For now  this is simple: Convert the highest need into a goal.
             //In the future, we might weigh needs differently or consider other factors.
+
+            //Do not change goals if we're attached to something.
+            if (attach.AttachmentState == (byte)AttachmentState.Attached)
+                return;
+
             var needs = Needs[entity];
 
             float highest = float.MinValue;
             int goal = -1;
 
-            for (int j = 0; j < (int)Goals.Count - 1; j++)
+            for (int j = 0; j < (int)Goals.Count; j++)
             {
                 var need = needs[j].Value;
 
@@ -32,8 +37,15 @@ public class GoalSystem : JobComponentSystem
                 }
             }
 
-            //Increment because goals have 0 == None
-            goals.CurrentGoal = (byte)(goal + 1);
+            if (highest >= 30)
+            {
+                //Increment because goals have 0 == None
+                goals.CurrentGoal = (byte)goal;
+            }
+            else
+            {
+                goals.CurrentGoal = (byte)Goals.None;
+            }
         }
     }
 

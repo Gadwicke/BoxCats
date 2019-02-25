@@ -3,11 +3,12 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using UnityEngine;
 
 public class NeedProviderSystem : JobComponentSystem
 {
     [BurstCompile]
-    public struct ApplyNeeds : IJobProcessComponentDataWithEntity<AttachmentData>
+    public struct ApplyNeeds : IJobProcessComponentDataWithEntity<AttachmentData, GoalData>
     {
         [ReadOnly]
         public ComponentDataFromEntity<NeedProviderData> ProviderData;
@@ -15,9 +16,9 @@ public class NeedProviderSystem : JobComponentSystem
         [NativeDisableParallelForRestriction]
         public BufferFromEntity<NeedValue> Needs;
 
-        public void Execute(Entity thisEntity, int i, ref AttachmentData attach)
+        public void Execute(Entity thisEntity, int i, ref AttachmentData attach, [ReadOnly] ref GoalData goal)
         {
-            if (attach.Attached != 0x1)
+            if (attach.AttachmentState != (byte)AttachmentState.Attached)
                 return;
 
             var time = SafeClock.TimeSinceInitialization;
@@ -28,6 +29,7 @@ public class NeedProviderSystem : JobComponentSystem
             {
                 //Only use the time up until the expiry
                 deltaTime = expiry - attach.LastTimeProcessed;
+                attach.AttachmentState = (byte)AttachmentState.Complete;
             }
             else
             {
@@ -47,7 +49,7 @@ public class NeedProviderSystem : JobComponentSystem
 
                 var needs = Needs[thisEntity];
 
-                var index = (int)needProvider.NeedSatisfied;
+                var index = (int)goal.CurrentGoal;
 
                 var need = needs[index];
 
@@ -55,9 +57,6 @@ public class NeedProviderSystem : JobComponentSystem
                 need = math.max(0, need);
 
                 needs[index] = need;
-
-                if (need == 0)
-                    attach.Attached = 0x0;
             }
         }
     }

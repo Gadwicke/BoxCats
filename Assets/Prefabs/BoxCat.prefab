@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SerializedData:
-    Attached: 0
+    AttachmentState: 0
     AttachmentDuration: 0
     AttachmentBeganTimestamp: 0
     LastTimeProcessed: 0

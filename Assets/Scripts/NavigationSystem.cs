@@ -4,6 +4,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 using Random = Unity.Mathematics.Random;
 
 /// <summary>
@@ -27,7 +28,7 @@ public class NavigationSystem : JobComponentSystem
 
         public void Execute([ReadOnly] ref Position OurPosition, ref Waypoint waypoint, [ReadOnly] ref GoalData goals, ref AttachmentData attach)
         {
-            if ((goals.CurrentGoal == (byte)Goals.None && waypoint.Reached == 0x1) || goals.CurrentGoal != waypoint.Goal)
+            if ((goals.CurrentGoal == (byte)Goals.None && waypoint.Reached == 0x1) || goals.CurrentGoal != (byte)Goals.None)
             {
                 if (goals.CurrentGoal != (byte)Goals.None)
                 {
@@ -47,7 +48,7 @@ public class NavigationSystem : JobComponentSystem
                         {
                             var provider = providers[j];
 
-                            if (provider.NeedSatisfied != goals.CurrentGoal-1)
+                            if (provider.NeedSatisfied != goals.CurrentGoal)
                                 continue;
 
                             var pos = positions[j];
@@ -70,45 +71,58 @@ public class NavigationSystem : JobComponentSystem
 
                     if (found)
                     {
-                        //Set the waypoint to the provider
-                        waypoint.x = nearest.x;
-                        waypoint.y = nearest.y;
-                        waypoint.z = nearest.z;
-                        waypoint.Reached = 0x0;
+                        if (attach.AttachmentState != (byte)AttachmentState.Attached)
+                        {
+                            //Set the waypoint to the provider
+                            //waypoint.x = nearest.x;
+                            //waypoint.y = nearest.y;
+                            //waypoint.z = nearest.z;
+                            waypoint.Value = nearest;
+                            waypoint.Goal = goals.CurrentGoal;
 
-                        //Prepare the attachment
-                        attach.AttachmentDuration = providerData.TimePerUse;
-                        attach.AttachedEntity = providerEntity;
-                        attach.Attached = 0x0;
+                            //Prepare the attachment
+                            attach.AttachmentDuration = providerData.TimePerUse;
+                            attach.AttachedEntity = providerEntity;
+                            attach.AttachmentState = (byte)AttachmentState.Navigating;
+                        }
                     }
                     else
                     {
                         //We're wandering, so set a completely random waypoint.
-                        waypoint.x = (Rand.NextFloat() * 400) - 200;
-                        waypoint.z = (Rand.NextFloat() * 400) - 200;
-                        waypoint.y = 0;
-                        waypoint.Reached = 0x0;
+                        var x = (Rand.NextFloat() * 400) - 200;
+                        var z = (Rand.NextFloat() * 400) - 200;
+                        waypoint.Value = new float3(x, 0, z);
+                        waypoint.Goal = goals.CurrentGoal;
+
+                        attach.AttachmentDuration = 0;
+                        attach.AttachedEntity = Entity.Null;
+                        attach.AttachmentState = (byte)AttachmentState.Unattached;
                     }
                 }
                 else
                 {
                     //We're wandering, so set a completely random waypoint.
-                    waypoint.x = (Rand.NextFloat() * 400) - 200;
-                    waypoint.z = (Rand.NextFloat() * 400) - 200;
-                    waypoint.y = 0;
-                    waypoint.Reached = 0x0;
-                }
+                    var x = (Rand.NextFloat() * 400) - 200;
+                    var z = (Rand.NextFloat() * 400) - 200;
+                    waypoint.Value = new float3(x, 0, z);
+                    waypoint.Goal = goals.CurrentGoal;
 
-                waypoint.Goal = goals.CurrentGoal;
+                    attach.AttachmentDuration = 0;
+                    attach.AttachedEntity = Entity.Null;
+                    attach.AttachmentState = (byte)AttachmentState.Unattached;
+                }
             }
 
-            if (waypoint.Reached == 0x1 && goals.CurrentGoal == waypoint.Goal && attach.Attached == 0x0)
+            if (attach.AttachmentState == (byte)AttachmentState.Navigating)
             {
-                //We've reached the target, so attach to it.
-                attach.Attached = 0x1;
-                var time = SafeClock.TimeSinceInitialization;
-                attach.AttachmentBeganTimestamp = time;
-                attach.LastTimeProcessed = time;
+                if (waypoint.Reached == 0x1 && goals.CurrentGoal == waypoint.Goal)
+                {
+                    //We've reached the target, so attach to it.
+                    attach.AttachmentState = (byte)AttachmentState.Attached;
+                    var time = SafeClock.TimeSinceInitialization;
+                    attach.AttachmentBeganTimestamp = time;
+                    attach.LastTimeProcessed = time;
+                }
             }
         }
     }

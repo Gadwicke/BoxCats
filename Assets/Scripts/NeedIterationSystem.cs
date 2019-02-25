@@ -28,7 +28,7 @@ public class NeedIterationSystem : JobComponentSystem
             var needs = Needs[entity].Reinterpret<float>();
             var modifiers = Modifiers[entity];
 
-            for (int j = 0; j < (int)Goals.Count - 1; j++)
+            for (int j = 0; j < (int)Goals.Count; j++)
             {
                 var need = needs[j];
                 var mod = modifiers[j];

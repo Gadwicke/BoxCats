@@ -3,11 +3,11 @@ using Unity.Entities;
 
 public enum Goals : byte
 {
-    None,
     Eat,
     Drink,
     Socialize,
-    Count
+    Count,
+    None = 0xFF
 }
 
 [Serializable]

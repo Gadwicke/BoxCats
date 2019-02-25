@@ -25,7 +25,7 @@ public class SteeringSystem : JobComponentSystem
         {
             //For now just lerp rotation and position as fast as possible.
             //Ideally we would S curve this but for now we're KISSing.
-            var point = new float3(waypoint.x, waypoint.y, waypoint.z);
+            var point = waypoint.Value;
 
             var posDelta = point - position.Value;
             var dist = math.length(posDelta);
@@ -35,6 +35,8 @@ public class SteeringSystem : JobComponentSystem
                 waypoint.Reached = 0x1;
                 return;
             }
+
+            waypoint.Reached = 0x0;
 
             var dir = (float3)(posDelta / dist);
             position.Value += dir * MaximumSpeed * DeltaTime;
