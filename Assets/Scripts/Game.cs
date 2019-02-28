@@ -30,7 +30,7 @@ public class Game : MonoBehaviour
     private void Demo()
     {
         //Cats
-        var count = 2000;
+        var count = 1000;
         NativeArray<Entity> entities = new NativeArray<Entity>(count, Allocator.Temp);
         _manager.Instantiate(CatBoxPrefab, entities);
 
@@ -56,6 +56,8 @@ public class Game : MonoBehaviour
             {
                 modifiers.Add(Random.Range(0.5f, 1.5f));
             }
+
+            _manager.AddBuffer<NearbyEntity>(entities[i]);
 
             //We're using traditional prefabs here because ECS doesn't really support prefab hierarchies or complex objects.
             //And we're too lazy to implement our own renderer component to make the complex entity we need. ...For now.

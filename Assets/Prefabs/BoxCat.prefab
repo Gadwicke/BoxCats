@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 4916592751802136036}
   - component: {fileID: 4254695821418479475}
   - component: {fileID: 1791320847173073561}
+  - component: {fileID: 6023507017390770920}
+  - component: {fileID: 1600916947922203012}
   m_Layer: 0
   m_Name: BoxCat
   m_TagString: Untagged
@@ -116,9 +118,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SerializedData:
-    x: 0
-    y: 0
-    z: 0
+    Value:
+      x: 0
+      y: 0
+      z: 0
     Reached: 0
     Goal: 0
 --- !u!114 &4916592751802136036
@@ -168,3 +171,37 @@ MonoBehaviour:
     NeedSatisfied: 2
     AmountPerUse: 25
     TimePerUse: 10
+--- !u!114 &6023507017390770920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425735451876514694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03f986a158b9af348b180fc66d1d89f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedData:
+    Value:
+      x: 0
+      y: 0
+      z: 0
+--- !u!114 &1600916947922203012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425735451876514694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee898b1a34ee010469e3d41eac3e9f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedData:
+    Value:
+      x: 0
+      y: 0
+      z: 0
