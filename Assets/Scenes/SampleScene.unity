@@ -298,7 +298,11 @@ MonoBehaviour:
     type: 3}
   FoodPrefab: {fileID: 8441114475661045106, guid: 3f2ff92a57116b54a86cc326f1a5024c,
     type: 3}
+  FoodBodyPrefab: {fileID: 2682103222717549319, guid: b2ab6d9247438534eae4a7ad0f44c7c1,
+    type: 3}
   WaterPrefab: {fileID: 8441114475661045106, guid: 6b6009b67dadb4f409797c98e95cb24d,
+    type: 3}
+  WaterBodyPrefab: {fileID: 6013203389415506635, guid: 2f0b18842cf7505458e0810dadd08c62,
     type: 3}
 --- !u!4 &850028008
 Transform:
@@ -326,6 +330,8 @@ GameObject:
   - component: {fileID: 1242744921}
   - component: {fileID: 1242744919}
   - component: {fileID: 1242744920}
+  - component: {fileID: 1242744924}
+  - component: {fileID: 1242744923}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -400,6 +406,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1242744923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242744918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03f986a158b9af348b180fc66d1d89f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedData:
+    Value:
+      x: 0
+      y: 0
+      z: 0
+--- !u!114 &1242744924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242744918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf10cdea1344482e91a4f2b58506b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1649305285
 GameObject:
   m_ObjectHideFlags: 0
