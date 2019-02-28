@@ -10,7 +10,9 @@ public class Game : MonoBehaviour
     public GameObject CatBoxPrefab;
     public GameObject BodyPrefab;
     public GameObject FoodPrefab;
+    public GameObject FoodBodyPrefab;
     public GameObject WaterPrefab;
+    public GameObject WaterBodyPrefab;
 
     EntityManager _manager;
     
@@ -76,6 +78,11 @@ public class Game : MonoBehaviour
             var pos = new float3(Random.Range(-200, 200), 0, Random.Range(-200, 200));
 
             _manager.SetComponentData(entities[i], new Position() { Value = pos });
+
+            var bodyGO = Instantiate(FoodBodyPrefab);
+            var updater = bodyGO.GetComponent<UpdateTransformFromEntity>();
+            if (updater != null)
+                updater.Parent = entities[i];
         }
 
         entities.Dispose();
@@ -90,6 +97,11 @@ public class Game : MonoBehaviour
             var pos = new float3(Random.Range(-200, 200), 0, Random.Range(-200, 200));
 
             _manager.SetComponentData(entities[i], new Position() { Value = pos });
+
+            var bodyGO = Instantiate(WaterBodyPrefab);
+            var updater = bodyGO.GetComponent<UpdateTransformFromEntity>();
+            if (updater != null)
+                updater.Parent = entities[i];
         }
 
         entities.Dispose();

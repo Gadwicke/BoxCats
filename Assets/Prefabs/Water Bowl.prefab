@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 6769753048388013302}
   - component: {fileID: 4411531815685248892}
   - component: {fileID: 8037820965709192238}
-  - component: {fileID: 4864965995541177875}
-  - component: {fileID: 5151623869734860769}
+  - component: {fileID: 3935324174252476496}
   m_Layer: 0
   m_Name: Water Bowl
   m_TagString: Untagged
@@ -80,7 +79,7 @@ MonoBehaviour:
     NeedSatisfied: 1
     AmountPerUse: 25
     TimePerUse: 5
---- !u!114 &4864965995541177875
+--- !u!114 &3935324174252476496
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,24 +88,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8441114475661045106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b0fd4427893a4a16ba0c267dfd00217, type: 3}
+  m_Script: {fileID: 11500000, guid: 345a91954f2ba4779ae83b4fcf75bef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SerializedData:
-    mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-    material: {fileID: 2100000, guid: 8f0a4548dde1543439eed657ab2be7ce, type: 2}
-    subMesh: 0
-    castShadows: 1
-    receiveShadows: 0
---- !u!114 &5151623869734860769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8441114475661045106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f922032aad1e4f109e892944af196e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+    Value:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 1
